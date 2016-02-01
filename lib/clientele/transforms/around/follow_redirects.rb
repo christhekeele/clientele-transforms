@@ -1,15 +1,18 @@
 module Clientele
   module Transforms
     module Around
+      module FollowRedirects
+        module_function
 
-      module_function def call(request)
-        response = yield(request)
-        if response.status.redirectable?
-          response = response.request.client.class.get( response.headers.location )
+        def call(request)
+          response = yield(request)
+          if response.status.redirectable?
+            response = response.request.client.class.get( response.headers.location )
+          end
+          response
         end
-        response
-      end
 
+      end
     end
   end
 end
