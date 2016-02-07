@@ -7,7 +7,7 @@ module Clientele
         def call(request)
           response = yield(request)
           if response.status.redirectable?
-            response = response.request.client.class.get( response.headers.location )
+            response = response.request.client.get( uri: response.headers.location )
           end
           response
         end
