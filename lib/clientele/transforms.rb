@@ -7,6 +7,16 @@ module Clientele
     module Around; end
     module After;  end
     
+    def self.const_missing(const)
+      [Before, Around, After].each do |mod|
+        return mod.const_get const rescue nil
+      end or super
+    end
+    
+  end
+  
+  def self.const_missing(const)
+    Transforms.const_get(const) or super
   end
 end
 
